@@ -30,7 +30,6 @@ def count_clicks(token, link):
   return clicks['total_clicks']
 
 if __name__ == "__main__":
-  #user_link = input("Введите ссылку: ")
   parser = argparse.ArgumentParser(
     description='Сокращение ссылки через bit.ly, либо вывод кол-ва кликов по битлинку'
   )
