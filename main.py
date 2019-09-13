@@ -3,9 +3,6 @@ import requests
 import os
 
 from dotenv import load_dotenv
-load_dotenv()
-
-bitly_token = os.getenv("BITLY_TOKEN")
 
 def cut_link(token, url):
   bitly_auth = {"Authorization": "Bearer {}".format(token)}
@@ -30,6 +27,8 @@ def count_clicks(token, link):
   return clicks['total_clicks']
 
 if __name__ == "__main__":
+
+  load_dotenv()
   parser = argparse.ArgumentParser(
     description='Сокращение ссылки через bit.ly, либо вывод кол-ва кликов по битлинку'
   )
@@ -38,12 +37,12 @@ if __name__ == "__main__":
 
   if args.user_link.startswith('bit.ly'):
     try:
-      total_clicks = count_clicks(bitly_token, args.user_link)
+      total_clicks = count_clicks(os.getenv("BITLY_TOKEN"), args.user_link)
       print(f"По вашей ссылке прошли {total_clicks} раз(а)")
     except requests.exceptions.HTTPError:
       print('Вы ввели неверную ссылку')
   else:
     try:
-      print("Битлинк: ", cut_link(bitly_token, args.user_link))
+      print("Битлинк: ", cut_link(os.getenv("BITLY_TOKEN"), args.user_link))
     except requests.exceptions.HTTPError:
       print('Вы ввели неверную ссылку')
