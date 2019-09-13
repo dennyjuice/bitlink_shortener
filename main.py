@@ -29,6 +29,8 @@ def count_clicks(token, link):
 if __name__ == "__main__":
 
   load_dotenv()
+  BITLY_TOKEN = os.getenv("BITLY_TOKEN")
+  
   parser = argparse.ArgumentParser(
     description='Сокращение ссылки через bit.ly, либо вывод кол-ва кликов по битлинку'
   )
@@ -37,12 +39,12 @@ if __name__ == "__main__":
 
   if args.user_link.startswith('bit.ly'):
     try:
-      total_clicks = count_clicks(os.getenv("BITLY_TOKEN"), args.user_link)
+      total_clicks = count_clicks(BITLY_TOKEN, args.user_link)
       print(f"По вашей ссылке прошли {total_clicks} раз(а)")
     except requests.exceptions.HTTPError:
       print('Вы ввели неверную ссылку')
   else:
     try:
-      print("Битлинк: ", cut_link(os.getenv("BITLY_TOKEN"), args.user_link))
+      print("Битлинк: ", cut_link(BITLY_TOKEN, args.user_link))
     except requests.exceptions.HTTPError:
       print('Вы ввели неверную ссылку')
